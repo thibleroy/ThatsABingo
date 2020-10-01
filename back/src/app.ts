@@ -4,26 +4,94 @@ import app from 'express';
 const expressApp = app();
 const httpServer: HttpServer = new HttpServer(expressApp);
 const socketServer = SocketServer(httpServer);
-interface Bingo {
+interface BingoItem {
     id: string;
     value: string;
 }
-const bingos: Bingo[] = [];
+interface BingoCard {
+    name: string
+    bingoItems: BingoItem[];
+    id: string;
+}
+const bingoTopics = {
+    items: {
+        GET: 'getBingoItems',
+        ADD: 'addBingoItems',
+        EDIT: 'editBingoItems',
+        REMOVE: 'removeBingoItems'
+    },
+    cards: {
+        GET: 'getBingoCards',
+        ADD: 'addBingoCards',
+        EDIT: 'editBingoCards',
+        REMOVE: 'removeBingoCards'
+    }
+};
+const newBingoItems: BingoItem[] = [];
+const bingoCard_1: BingoCard = {
+    name: 'card1',
+    bingoItems: [{id: '&é', value: 'test'}, {id: 'ezds', value: 'test2'}],
+    id: 'ejdjz'
+};
+const bingoCard_2: BingoCard = {
+    name: 'card2',
+    bingoItems: [{id: '&é', value: 'test'}, {id: 'ezds', value: 'test2'}],
+    id: 'jifjc'
+};
+const bingoCards: BingoCard[] = [bingoCard_1, bingoCard_2];
 const port = 12345;
 socketServer.on("connection", socket => {
     const addr = socket.handshake.address;
     console.log('connected with ip', addr);
-    socketServer.emit("bingo", JSON.stringify(bingos));
-    socket.on('editBingo', (bingo: Bingo) => {
+    socketServer.emit(bingoTopics.items.GET, newBingoItems);
+    socketServer.emit(bingoTopics.cards.GET, bingoCards);
+
+    socket.on(bingoTopics.items.EDIT, (bingo: BingoItem) => {
         console.log('edit bingo :', bingo);
-        const id = bingos.findIndex((obj => obj.id === bingo.id));
-        bingos[id].value = bingo.value;
-        socketServer.emit("bingo", JSON.stringify(bingos));
+        const index = newBingoItems.findIndex((obj => obj.id === bingo.id));
+        newBingoItems[index].value = bingo.value;
+        socketServer.emit(bingoTopics.items.GET, newBingoItems);
     });
-    socket.on('addBingo', (bingo: Bingo) => {
+
+    socket.on(bingoTopics.items.ADD, (bingo: BingoItem) => {
         console.log('received new bingo :', bingo);
-        bingos.push(bingo);
-        socketServer.emit("bingo", JSON.stringify(bingos));
+        newBingoItems.push(bingo);
+        socketServer.emit(bingoTopics.items.GET, newBingoItems);
+    });
+
+    socket.on(bingoTopics.items.REMOVE, (bingo: BingoItem) => {
+        console.log('delete bingo :', bingo);
+        const index = newBingoItems.findIndex((obj => obj.id === bingo.id));
+        if (index > -1) {
+            newBingoItems.splice(index, 1);
+        }
+        socketServer.emit(bingoTopics.items.GET, newBingoItems);
+    });
+
+
+
+
+
+    socket.on(bingoTopics.cards.ADD, (card: BingoCard) => {
+        console.log('received new card :', card);
+        bingoCards.push(card);
+        socketServer.emit(bingoTopics.cards.GET, bingoCards);
+    });
+
+    socket.on(bingoTopics.cards.REMOVE, (card: BingoCard) => {
+        console.log('delete bingo card :', card);
+        const index = bingoCards.findIndex((obj => obj.id === card.id));
+        if (index > -1) {
+            bingoCards.splice(index, 1);
+        }
+        socketServer.emit(bingoTopics.cards.GET, bingoCards);
+    });
+
+    socket.on(bingoTopics.cards.EDIT, (card: BingoCard) => {
+        console.log('edit bingo card:', card);
+        const index = bingoCards.findIndex((obj => obj.id === card.id));
+        bingoCards[index].bingoItems = card.bingoItems;
+        socketServer.emit(bingoTopics.cards.GET, bingoCards);
     });
 });
 
