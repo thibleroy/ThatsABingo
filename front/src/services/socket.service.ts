@@ -5,5 +5,8 @@ import { Socket } from 'ngx-socket-io';
 })
 export class SocketService {
   constructor(private socket: Socket) { }
-  documents = this.socket.fromEvent<any>('documents');
+  bingo = this.socket.fromEvent<any>('bingo');
+  editBingo(bingo: string){
+    this.socket.emit('editBingo', bingo);
+  }
 }

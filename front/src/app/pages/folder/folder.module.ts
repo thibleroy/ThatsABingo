@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { FolderPageRoutingModule } from './folder-routing.module';
 
 import { FolderPage } from './folder.page';
+import {SoCompModule} from '../../components/socomp/socomp.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FolderPageRoutingModule
+    FolderPageRoutingModule,
+      SoCompModule
   ],
   declarations: [FolderPage]
 })

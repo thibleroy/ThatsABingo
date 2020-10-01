@@ -8,13 +8,12 @@ import {SocketService} from '../../../services/socket.service';
   styleUrls: ['./folder.page.scss'],
 })
 export class FolderPage implements OnInit {
-  public folder: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private socket: SocketService) { }
+
+  constructor() { }
 
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log('docs', this.socket.documents);
+
   }
 
 }

@@ -1,3 +1,17 @@
-<p>
-  socomp works!
-</p>
+<div>
+
+  <p>
+
+    {{this.currentBingo}}
+
+  </p>
+
+  Edit bingo :
+
+  <ion-input #bingo>
+
+  </ion-input>
+  <ion-button (click)="socket.editBingo(bingo.value)">
+    Edit bingo
+  </ion-button>
+</div>

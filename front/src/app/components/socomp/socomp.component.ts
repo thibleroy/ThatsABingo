@@ -1,14 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {SocketService} from '../../../services/socket.service';
+import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-socomp',
+  selector: 'so-comp',
   templateUrl: './socomp.component.html',
   styleUrls: ['./socomp.component.scss'],
 })
-export class SocompComponent implements OnInit {
+export class SocompComponent implements OnInit, OnDestroy {
+  currentBingo: any;
+  private bingoSub: Subscription;
+  constructor(private socket: SocketService) { }
 
-  constructor() { }
-
-  ngOnInit() {}
-
+  ngOnInit() {
+    this.currentBingo = this.socket.bingo;
+    this.bingoSub = this.socket.bingo.subscribe(doc => this.currentBingo = doc);
+  }
+  ngOnDestroy() {
+    this.bingoSub.unsubscribe();
+  }
 }
