@@ -1,0 +1,11 @@
+<ion-item>
+  <ion-input [(ngModel)]="currentBingo.value" slot="start" (ionBlur)="editBingoItem()"></ion-input>
+  <ion-buttons slot="end">
+    <ion-button (click)="editBingoItem()" >
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+    <ion-button (click)="removeBingoItem()">
+      <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-item>

@@ -2,14 +2,20 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-
-
+        <ion-title>That's a bingo !</ion-title>
+        <ion-list class="menu-title">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+        <ion-list class="menu-title">
+          <ion-list-header>My bingo cards</ion-list-header>
+          <ion-menu-toggle auto-hide="false" *ngFor="let bingoCard of currentBingoCards">
+            <ion-item [routerLink]="bingoCard.name">
+              <ion-label>{{ bingoCard.name }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

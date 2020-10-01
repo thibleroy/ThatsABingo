@@ -1,12 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+<ion-card>
+  <ion-card-content>
+    <ion-item >
+      <ion-label position="floating">New bingo item</ion-label>
+      <ion-textarea [(ngModel)]="newBingoItem" inputmode="text"></ion-textarea>
+    </ion-item>
+    <ion-buttons slot="end">
+      <ion-button (click)="addBingo()" >
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-
- <so-comp></so-comp>
+  </ion-card-content>
+</ion-card>
+<ion-content>
+    <div *ngFor="let b of newBingoItems">
+        <bingo-item [currentBingo]="b"></bingo-item>
+    </div>
 </ion-content>
+
+  <ion-button (click)="createBingo()" >
+    Create new bingo !
+  </ion-button>
+

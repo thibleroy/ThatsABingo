@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SopagePageRoutingModule } from './sopage-routing.module';
-
-import { SopagePage } from './sopage.page';
+import { BingoItemComponent } from './bingo-item.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SopagePageRoutingModule
   ],
-  declarations: [SopagePage]
+  exports: [
+    BingoItemComponent
+  ],
+  declarations: [BingoItemComponent]
 })
-export class SopagePageModule {}
+export class BingoItemModule {}

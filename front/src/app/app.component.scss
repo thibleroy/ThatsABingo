@@ -29,7 +29,13 @@ ion-menu.md ion-list#inbox-list {
 ion-menu.md ion-list#inbox-list ion-list-header {
   font-size: 22px;
   font-weight: 600;
+  min-height: 20px;
+}
 
+.menu-title {
+  border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
+  font-size: 22px;
+  font-weight: 600;
   min-height: 20px;
 }
 

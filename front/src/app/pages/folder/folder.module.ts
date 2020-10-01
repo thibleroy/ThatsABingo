@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FolderPageRoutingModule } from './folder-routing.module';
 
 import { FolderPage } from './folder.page';
-import {SoCompModule} from '../../components/socomp/socomp.module';
+import {BingoItemModule} from '../../components/bingo-item/bingo-item.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import {SoCompModule} from '../../components/socomp/socomp.module';
     FormsModule,
     IonicModule,
     FolderPageRoutingModule,
-      SoCompModule
+      BingoItemModule
   ],
   declarations: [FolderPage]
 })

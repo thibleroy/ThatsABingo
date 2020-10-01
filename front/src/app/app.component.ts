@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {Subscription} from 'rxjs';
+import {SocketService} from '../services/socket.service';
+import {BingoCard} from '../models/Bingo';
 
 @Component({
   selector: 'app-root',
@@ -11,31 +14,41 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
+  private bingoSub: Subscription;
+  currentBingoCards: BingoCard[];
   public appPages = [
     {
-      title: 'Socket',
-      url: '/folder/Inbox',
-      icon: 'mail'
+      title: 'New bingo',
+      url: '/bingo/new',
+      icon: 'happy'
     }];
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private socket: SocketService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+    if (this.platform.is('cordova')){
+      this.platform.ready().then(() => {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+      });
+    }
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
+    this.bingoSub = this.socket.bingoCards.subscribe((doc) => {
+      console.log('obj', doc);
+      if (typeof doc !== 'object'){
+        this.currentBingoCards = JSON.parse(doc);
+      }
+      else {
+        this.currentBingoCards = doc;
+      }
+    });
   }
 }

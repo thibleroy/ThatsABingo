@@ -4,16 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'bingo/new',
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
+    path: 'bingo/:id',
     loadChildren: () => import('./pages/folder/folder.module').then(m => m.FolderPageModule)
-  },
-  {
-    path: 'sopage',
-    loadChildren: () => import('./pages/sopage/sopage.module').then( m => m.SopagePageModule)
   }
 ];
 
