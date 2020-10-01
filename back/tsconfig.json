@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "target": "esnext",
+    "strict": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+
+  ]
+}

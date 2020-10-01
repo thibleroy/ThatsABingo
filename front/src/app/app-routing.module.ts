@@ -9,7 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    loadChildren: () => import('./pages/folder/folder.module').then(m => m.FolderPageModule)
+  },
+  {
+    path: 'sopage',
+    loadChildren: () => import('./pages/sopage/sopage.module').then( m => m.SopagePageModule)
   }
 ];
 
